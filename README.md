@@ -137,3 +137,5 @@ or
 ```sh
 yarn run cypress:run
 ```
+
+CC: Daniel Velasco / daniel.velasco@itglobers.com
