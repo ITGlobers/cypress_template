@@ -138,4 +138,6 @@ or
 yarn run cypress:run
 ```
 
+## Contact
+
 CC: Daniel Velasco / daniel.velasco@itglobers.com
