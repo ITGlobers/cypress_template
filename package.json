@@ -1,0 +1,16 @@
+{
+  "name": "cypress_template",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "cypress:open": "./cypress-local.sh open",
+    "cypress:run": "./cypress-local.sh run"
+  },
+  "repository": "git@github.com:ITGlobers/cypress_template.git",
+  "author": "Daniel Velasco <daniel.velasco@itglobers.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "4.5.0",
+    "typescript": "^5.4.5"
+  }
+}
