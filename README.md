@@ -7,7 +7,7 @@ This repository is a reference for testing Cypress on VTEX. Provides information
 
 ## Configuration
 
-### Install dependencies:
+### Install dependencies
 
 - `$ yarn`
 
