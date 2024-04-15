@@ -4,7 +4,7 @@ workspace=$(vtex local workspace)
 
 resolvedConfig="resolved-cypress.json"
 
-sed -e "s/<danielvelasco>/\$workspace/" -e "s/<itgloberspartnercl>/\$account/" cypress.json > $resolvedConfig
+sed -e "s/<workspace>/\$workspace/" -e "s/<account>/\$account/" cypress.json > $resolvedConfig
 
 export CYPRESS_authToken=$token
 
