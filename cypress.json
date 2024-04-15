@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://dev--fashionireland.myvtex.com/",
+  "baseUrl": "https://<workspace>--<account>.myvtex.com",
   "specCallback": true,
   "completeCallback": true,
   "viewportWidth": 1920,
