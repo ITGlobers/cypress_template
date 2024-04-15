@@ -1,31 +1,18 @@
 function setVtexIdCookie() {
-  const cookieOptions =
-    {
-      domain: `.${
-        new URL(
-          Cypress.config()
-            .baseUrl as string
-        ).hostname
-      }`,
-    };
+  const cookieOptions = {
+    domain: `.${new URL(Cypress.config().baseUrl as string).hostname}`,
+  };
   return cy.setCookie(
     "VtexIdclientAutCookie",
-    Cypress.env(
-      "authToken"
-    ) as string,
+    Cypress.env("authToken") as string,
     cookieOptions
   );
 }
 
-Cypress.Commands.add(
-  "setVtexIdCookie",
-  setVtexIdCookie
-);
+Cypress.Commands.add("setVtexIdCookie", setVtexIdCookie);
 
 declare namespace Cypress {
-  interface Chainable<
-    Subject
-  > {
+  interface Chainable<Subject> {
     setVtexIdCookie: typeof setVtexIdCookie;
   }
 }
