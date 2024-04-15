@@ -1,0 +1,5 @@
+{
+  "productSummaryContainer": "section.vtex-product-summary-2-x-container",
+  "productInfoData": ".vtex-flex-layout-0-x-flexCol--product__info-data--desktop",
+  "addToCartButton": ".vtex-button.bw1.ba.fw5.v-mid.relative.pa0.lh-solid.br2.min-h-regular.t-action.bg-action-primary.b--action-primary.c-on-action-primary.hover-bg-action-primary.hover-b--action-primary.hover-c-on-action-primary.pointer.w-100"
+}
