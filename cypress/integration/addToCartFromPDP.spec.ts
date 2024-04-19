@@ -9,11 +9,15 @@ describe("Add to cart from PDP", () => {
     cy.visit("/");
     cy.wait(3000);
     cy.fixture("addToCartFromPDP").then((contentElement) => {
-      cy.get(contentElement.productSummaryContainer).first().click();
-      cy.wait(5000);
-      cy.get(contentElement.productInfoData)
-        .find(contentElement.addToCartButton)
+      cy.get(contentElement.productSummary)
+        .then((content) =>
+          content.eq(Math.floor(Math.random() * content.length))
+        )
         .click();
+      cy.wait(3000);
+      cy.get(contentElement.addToCartButton).click();
+
+      cy.get(contentElement.cartButton).wait(500).click();
     });
   });
 });
