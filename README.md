@@ -138,6 +138,239 @@ or
 yarn run cypress:run
 ```
 
+## How the Test Add to cart from PDP works
+
+The function of this test is to add a product to the cart from the PDP. This process is carried out as follows:
+
+- Before running the test, the custom command `setVtexIdCookie` is called to set a VTEX ID cookie.
+
+```ts
+import "../support/vtex";
+
+describe("Add to cart from PDP", () => {
+  before(() => {
+    cy.setVtexIdCookie();
+  });
+  ...
+});
+```
+
+- The test begins by visiting the main page (home) using the command `cy.visit("/")`. It is important to emphasize that for the test to work correctly, it must start from home, since it selects a product-summary from home.
+  The `cy.wait(3000)` is for the page to load properly to prevent errors.
+
+```ts
+it("Click on a product to go to the PDP and then click on the skus to select and finally add to cart", () => {
+  cy.visit("/");
+  cy.wait(3000);
+  ...
+});
+```
+
+- The `cy.fixture()` function is used to load a JSON file called `addToCartFromPDP`. The content of the file is passed as an argument to the callback function. In this case, the content of the file is assigned to the contentElement variable.
+
+```ts
+it("Click on a product to go to the PDP and then click on the skus to select and finally add to cart", () => {
+  cy.visit("/");
+  cy.wait(3000);
+  cy.fixture("addToCartFromPDP").then((contentElement) => {
+     ...
+  });
+});
+```
+
+- The `cy.get()` function is used to select an element from the DOM. Selects an element that matches the `contentElement.productSummary` CSS selector. The CSS selector is obtained from the content of the `addToCartFromPDP` JSON file. After the element is selected, a callback function is chained using `.then()`. This callback function takes the selected content and uses the `.eq()` method to select a specific element within the elements collection. The element index is randomly generated using `Math.random()` and `Math.floor().`, once the desired element is selected, the `.click()` method is called to simulate a click on the element.
+
+```ts
+it("Click on a product to go to the PDP and then click on the skus to select and finally add to cart", () => {
+  cy.visit("/");
+  cy.wait(3000);
+  cy.fixture("addToCartFromPDP").then((contentElement) => {
+    cy.get(contentElement.productSummary)
+      .then((content) => content.eq(Math.floor(Math.random() * content.length)))
+      .click();
+      ...
+  });
+});
+```
+
+- In this part of the code we again use `cy.get()` to select the elements from the DOM. In this case we are going to use the CSS selectors `contentElement.colorSkuOption` and `contentElement.sizeSkuOption` that are obtained from the JSON file `addToCartFromPDP` to select the skus. After selecting the elements, a callback function is chained that uses the `.then()` method to pass the selected content to the `cy.chooseRandomSku()` function. The `chooseRandomSku` function is a custom function defined in Cypress that the provided code adds as a new Cypress command.
+
+```ts
+it("Click on a product to go to the PDP and then click on the skus to select and finally add to cart", () => {
+  cy.visit("/");
+  cy.wait(3000);
+  cy.fixture("addToCartFromPDP").then((contentElement) => {
+    cy.get(contentElement.productSummary)
+      .then((content) => content.eq(Math.floor(Math.random() * content.length)))
+      .click();
+    cy.wait(2000);
+
+    cy.get(contentElement.colorSkuOption).then((content) =>
+      cy.chooseRandomSku(content)
+    );
+
+    cy.wait(1000);
+
+    cy.get(contentElement.sizeSkuOption).then((content) =>
+      cy.chooseRandomSku(content)
+    );
+    ...
+  });
+});
+```
+
+- In this part of the test we add the product to the cart by doing `cy.get()` to obtain the element from the DOM, we pass to `cy.get()` the CSS selector `contentElement.addToCartButton` that comes from the JSON file " addToCartFromPDP". To that selected element we concatenate a `.click()` to resemble a click.
+
+```ts
+it("Click on a product to go to the PDP and then click on the skus to select and finally add to cart", () => {
+  cy.visit("/");
+  cy.wait(3000);
+  cy.fixture("addToCartFromPDP").then((contentElement) => {
+    cy.get(contentElement.productSummary)
+      .then((content) => content.eq(Math.floor(Math.random() * content.length)))
+      .click();
+    cy.wait(2000);
+
+    cy.get(contentElement.colorSkuOption).then((content) =>
+      cy.chooseRandomSku(content)
+    );
+
+    cy.wait(1000);
+
+    cy.get(contentElement.sizeSkuOption).then((content) =>
+      cy.chooseRandomSku(content)
+    );
+
+    cy.wait(3000);
+    cy.get(contentElement.addToCartButton).click();
+    ...
+  });
+});
+```
+
+- And finally to open the shopping cart we do `cy.get()` to get the element from the DOM, we use the CSS selector `contentElement.cartButton` that comes from the JSON file "addToCartFromPDP" and then we concatenate a `.click()`.
+
+```ts
+it("Click on a product to go to the PDP and then click on the skus to select and finally add to cart", () => {
+  cy.visit("/");
+  cy.wait(3000);
+  cy.fixture("addToCartFromPDP").then((contentElement) => {
+    cy.get(contentElement.productSummary)
+      .then((content) => content.eq(Math.floor(Math.random() * content.length)))
+      .click();
+    cy.wait(2000);
+
+    cy.get(contentElement.colorSkuOption).then((content) =>
+      cy.chooseRandomSku(content)
+    );
+
+    cy.wait(1000);
+
+    cy.get(contentElement.sizeSkuOption).then((content) =>
+      cy.chooseRandomSku(content)
+    );
+
+    cy.wait(3000);
+    cy.get(contentElement.addToCartButton).click();
+
+    cy.get(contentElement.cartButton).wait(500).click();
+  });
+});
+```
+
+### How does the chooseRandomSku function work
+
+The function is located in the following path cypress/support/commands.ts
+
+- The `chooseRandomSku` function takes a content Element parameter which is a jQuery object.
+
+```ts
+const chooseRandomSku = (contentElement: JQuery<any>) => {
+  ...
+};
+```
+
+- Inside the function, jQuery's `.filter()` method is used to filter the elements of the contentElement object. Items that do not have the `vtex-store-components-3-x-skuSelectorItem--selected` CSS class are filtered out.
+
+```ts
+const chooseRandomSku = (contentElement: JQuery<any>) => {
+  const elementsWithoutClass = contentElement.filter(
+    (index: number, element: any) =>
+      !Cypress.$(element).hasClass(
+        "vtex-store-components-3-x-skuSelectorItem--selected"
+      )
+  );
+  ...
+};
+```
+
+- It checks if there are filtered items available to select. If the length of `elementsWithoutClass` is greater than zero, it means that there are elements without the class `vtex-store-components-3-x-skuSelectorItem--selected` and one can be selected randomly. Cypress's `.wrap()` method is used to wrap the randomly selected element in a Cypress object. The `.click()` method is then called to simulate a click on the element.
+
+```ts
+const chooseRandomSku = (contentElement: JQuery<any>) => {
+  const elementsWithoutClass = contentElement.filter(
+    (index: number, element: any) =>
+      !Cypress.$(element).hasClass(
+        "vtex-store-components-3-x-skuSelectorItem--selected"
+      )
+  );
+  if (elementsWithoutClass.length > 0)
+    cy.wrap(
+      elementsWithoutClass[
+        Math.floor(Math.random() * elementsWithoutClass.length)
+      ]
+    ).click();
+};
+```
+
+The code adds the chooseRandomSku function as a new Cypress command using `Cypress.Commands.add()`. This allows the function to be used as a custom command in Cypress tests.
+
+```ts
+const chooseRandomSku = (contentElement: JQuery<any>) => {
+  const elementsWithoutClass = contentElement.filter(
+    (index: number, element: any) =>
+      !Cypress.$(element).hasClass(
+        "vtex-store-components-3-x-skuSelectorItem--selected"
+      )
+  );
+  if (elementsWithoutClass.length > 0)
+    cy.wrap(
+      elementsWithoutClass[
+        Math.floor(Math.random() * elementsWithoutClass.length)
+      ]
+    ).click();
+};
+
+Cypress.Commands.add("chooseRandomSku", chooseRandomSku);
+```
+
+- The code declares a custom namespace in Cypress to extend the Chainable interface and add the `chooseRandomSku` command. This allows the command to be used seamlessly in Cypress command strings.
+
+```ts
+const chooseRandomSku = (contentElement: JQuery<any>) => {
+  const elementsWithoutClass = contentElement.filter(
+    (index: number, element: any) =>
+      !Cypress.$(element).hasClass(
+        "vtex-store-components-3-x-skuSelectorItem--selected"
+      )
+  );
+  if (elementsWithoutClass.length > 0)
+    cy.wrap(
+      elementsWithoutClass[
+        Math.floor(Math.random() * elementsWithoutClass.length)
+      ]
+    ).click();
+};
+
+Cypress.Commands.add("chooseRandomSku", chooseRandomSku);
+
+declare namespace Cypress {
+  interface Chainable<Subject> {
+    chooseRandomSku(contentElement: JQuery<any>): Chainable<void>;
+  }
+}
+```
+
 ## Contact
 
 CC: Daniel Velasco / daniel.velasco@itglobers.com
