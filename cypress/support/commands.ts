@@ -23,3 +23,26 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+const chooseRandomSku = (contentElement: JQuery<any>) => {
+  const elementsWithoutClass = contentElement.filter(
+    (index: number, element: any) =>
+      !Cypress.$(element).hasClass(
+        "vtex-store-components-3-x-skuSelectorItem--selected"
+      )
+  );
+  if (elementsWithoutClass.length > 0)
+    cy.wrap(
+      elementsWithoutClass[
+        Math.floor(Math.random() * elementsWithoutClass.length)
+      ]
+    ).click();
+};
+
+Cypress.Commands.add("chooseRandomSku", chooseRandomSku);
+
+declare namespace Cypress {
+  interface Chainable<Subject> {
+    chooseRandomSku(contentElement: JQuery<any>): Chainable<void>;
+  }
+}
