@@ -1,5 +1,7 @@
 {
   "productSummary": "section.vtex-product-summary-2-x-container",
   "addToCartButton": ".vtex-button.bw1.ba.fw5.v-mid.relative.pa0.lh-solid.br2.min-h-regular.t-action.bg-action-primary.b--action-primary.c-on-action-primary.hover-bg-action-primary.hover-b--action-primary.hover-c-on-action-primary.pointer.w-100",
+  "sizeSkuOption": ".vtex-flex-layout-0-x-flexColChild.vtex-flex-layout-0-x-flexColChild--product__info-data--desktop.pb0>div>div>div>.vtex-store-components-3-x-skuSelectorOptionsList.w-100.inline-flex.flex-wrap.ml2.items-center:first()>.relative.di.pointer.flex.items-center.outline-0.ma2.valueWrapper.vtex-store-components-3-x-skuSelectorItem.vtex-store-components-3-x-skuSelectorItem",
+  "colorSkuOption": ".vtex-flex-layout-0-x-flexColChild.vtex-flex-layout-0-x-flexColChild--product__info-data--desktop.pb0>div>div>div>.vtex-store-components-3-x-skuSelectorOptionsList.w-100.inline-flex.flex-wrap.ml2.items-center:last()>.relative.di.pointer.flex.items-center.outline-0.ma2.valueWrapper.vtex-store-components-3-x-skuSelectorItem.vtex-store-components-3-x-skuSelectorItem",
   "cartButton": ".vtex-button.bw1.ba.fw5.v-mid.relative.pa0.lh-solid.br2.min-h-regular.t-action.icon-button.dib.bg-transparent.b--transparent.c-action-primary.hover-b--transparent.hover-bg-action-secondary.hover-b--action-secondary.pointer"
 }
