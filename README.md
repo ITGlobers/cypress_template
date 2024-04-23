@@ -159,7 +159,7 @@ describe("Add to cart from PDP", () => {
   The `cy.wait(3000)` is for the page to load properly to prevent errors.
 
 ```ts
-it("Click on a product to go to the PDP and then click on the skus to select and finally add to cart", () => {
+it("Click on a product to go to the PDP and add it to the shopping cart", () => {
   cy.visit("/");
   cy.wait(3000);
   ...
@@ -169,7 +169,7 @@ it("Click on a product to go to the PDP and then click on the skus to select and
 - The `cy.fixture()` function is used to load a JSON file called `addToCartFromPDP`. The content of the file is passed as an argument to the callback function. In this case, the content of the file is assigned to the contentElement variable.
 
 ```ts
-it("Click on a product to go to the PDP and then click on the skus to select and finally add to cart", () => {
+it("Click on a product to go to the PDP and add it to the shopping cart", () => {
   cy.visit("/");
   cy.wait(3000);
   cy.fixture("addToCartFromPDP").then((contentElement) => {
@@ -181,7 +181,7 @@ it("Click on a product to go to the PDP and then click on the skus to select and
 - The `cy.get()` function is used to select an element from the DOM. Selects an element that matches the `contentElement.productSummary` CSS selector. The CSS selector is obtained from the content of the `addToCartFromPDP` JSON file. After the element is selected, a callback function is chained using `.then()`. This callback function takes the selected content and uses the `.eq()` method to select a specific element within the elements collection. The element index is randomly generated using `Math.random()` and `Math.floor().`, once the desired element is selected, the `.click()` method is called to simulate a click on the element.
 
 ```ts
-it("Click on a product to go to the PDP and then click on the skus to select and finally add to cart", () => {
+it("Click on a product to go to the PDP and add it to the shopping cart", () => {
   cy.visit("/");
   cy.wait(3000);
   cy.fixture("addToCartFromPDP").then((contentElement) => {
@@ -196,7 +196,7 @@ it("Click on a product to go to the PDP and then click on the skus to select and
 - In this part of the code we again use `cy.get()` to select the elements from the DOM. In this case we are going to use the CSS selectors `contentElement.colorSkuOption` and `contentElement.sizeSkuOption` that are obtained from the JSON file `addToCartFromPDP` to select the skus. After selecting the elements, a callback function is chained that uses the `.then()` method to pass the selected content to the `cy.chooseRandomSku()` function. The `chooseRandomSku` function is a custom function defined in Cypress that the provided code adds as a new Cypress command.
 
 ```ts
-it("Click on a product to go to the PDP and then click on the skus to select and finally add to cart", () => {
+it("Click on a product to go to the PDP and add it to the shopping cart", () => {
   cy.visit("/");
   cy.wait(3000);
   cy.fixture("addToCartFromPDP").then((contentElement) => {
@@ -222,7 +222,7 @@ it("Click on a product to go to the PDP and then click on the skus to select and
 - In this part of the test we add the product to the cart by doing `cy.get()` to obtain the element from the DOM, we pass to `cy.get()` the CSS selector `contentElement.addToCartButton` that comes from the JSON file " addToCartFromPDP". To that selected element we concatenate a `.click()` to resemble a click.
 
 ```ts
-it("Click on a product to go to the PDP and then click on the skus to select and finally add to cart", () => {
+it("Click on a product to go to the PDP and add it to the shopping cart", () => {
   cy.visit("/");
   cy.wait(3000);
   cy.fixture("addToCartFromPDP").then((contentElement) => {
@@ -251,7 +251,7 @@ it("Click on a product to go to the PDP and then click on the skus to select and
 - And finally to open the shopping cart we do `cy.get()` to get the element from the DOM, we use the CSS selector `contentElement.cartButton` that comes from the JSON file "addToCartFromPDP" and then we concatenate a `.click()`.
 
 ```ts
-it("Click on a product to go to the PDP and then click on the skus to select and finally add to cart", () => {
+it("Click on a product to go to the PDP and add it to the shopping cart", () => {
   cy.visit("/");
   cy.wait(3000);
   cy.fixture("addToCartFromPDP").then((contentElement) => {

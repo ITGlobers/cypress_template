@@ -5,7 +5,7 @@ describe("Add to cart from PDP", () => {
     cy.setVtexIdCookie();
   });
 
-  it("Click on a product to go to the PDP and then click on the skus to select and finally add to cart", () => {
+  it("Click on a product to go to the PDP and add it to the shopping cart", () => {
     cy.visit("/");
     cy.wait(3000);
     cy.fixture("addToCartFromPDP").then((contentElement) => {
