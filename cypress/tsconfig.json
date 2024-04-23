@@ -2,17 +2,10 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": "../node_modules",
-    "target": "es6",
-    "lib": [
-      "es6",
-      "dom"
-    ],
-    "types": [
-      "cypress"
-    ],
-    "module": "es6"
+    "target": "ESNext",
+    "lib": ["ESNext", "dom"],
+    "types": ["cypress"],
+    "module": "ESNext"
   },
-  "include": [
-    "**/*.ts"
-  ]
+  "include": ["**/*.ts"]
 }
